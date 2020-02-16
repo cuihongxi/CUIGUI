@@ -515,23 +515,19 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\malloc\Map0_Malloc.C</PathWithFileName>
-      <FilenameWithoutPath>Map0_Malloc.C</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\malloc\List4_Malloc.C</PathWithFileName>
+      <FilenameWithoutPath>List4_Malloc.C</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
-    <File>
-      <GroupNumber>6</GroupNumber>
-      <FileNumber>26</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\malloc\Simple_Malloc.C</PathWithFileName>
-      <FilenameWithoutPath>Simple_Malloc.C</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
+  </Group>
+
+  <Group>
+    <GroupName>DataStruct</GroupName>
+    <tvExp>1</tvExp>
+    <tvExpOptDlg>0</tvExpOptDlg>
+    <cbSel>0</cbSel>
+    <RteFlg>0</RteFlg>
   </Group>
 
   <Group>

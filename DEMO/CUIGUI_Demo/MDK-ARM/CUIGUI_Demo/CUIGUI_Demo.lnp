@@ -23,8 +23,7 @@
 "cuigui_demo\stm32f1xx_hal_flash_ex.o"
 "cuigui_demo\system_stm32f1xx.o"
 "cuigui_demo\lcd.o"
-"cuigui_demo\map0_malloc.o"
-"cuigui_demo\simple_malloc.o"
+"cuigui_demo\list4_malloc.o"
 --library_type=microlib --strict --scatter "CUIGUI_Demo\CUIGUI_Demo.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

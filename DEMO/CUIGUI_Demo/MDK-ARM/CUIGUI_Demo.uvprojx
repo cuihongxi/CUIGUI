@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\..\HARD\LCD;..\..\..\..\CUIGUI;..\..\..\malloc</IncludePath>
+              <IncludePath>../Inc;    ../Drivers/STM32F1xx_HAL_Driver/Inc;    ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;    ../Drivers/CMSIS/Device/ST/STM32F1xx/Include;    ../Drivers/CMSIS/Include;    ..\..\HARD\LCD;    ..\..\..\..\CUIGUI;    ..\..\..\malloc;    ..\..\..\DataStruct</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -527,16 +527,14 @@
           <GroupName>MALLOC</GroupName>
           <Files>
             <File>
-              <FileName>Map0_Malloc.C</FileName>
+              <FileName>List4_Malloc.C</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\malloc\Map0_Malloc.C</FilePath>
-            </File>
-            <File>
-              <FileName>Simple_Malloc.C</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\malloc\Simple_Malloc.C</FilePath>
+              <FilePath>..\..\..\malloc\List4_Malloc.C</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>DataStruct</GroupName>
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>
