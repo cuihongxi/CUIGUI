@@ -18,8 +18,8 @@
 #include "uhead.h"
 
 
-typedef     u8                 List4Type;      // 该设定决定最大可以申请的数量
-#define     MAX_MALLOCSIZE      100         // 最大的内存数            
+typedef     u16                 List4Type;      // 该设定决定最大可以申请的数量
+#define     MAX_MALLOCSIZE      50*1024         // 最大的内存数            
 
 
 typedef struct{
@@ -59,6 +59,5 @@ void    List4_Malloc_Init(list4Message* mess,u8* mallocAddr,List4Type length);
 void*   List4_Malloc(list4Message* mess,List4Type length);                                  // 内存申请
 void    List4_Free(list4Message* mess,void* addr);                                          // 内存释放
 
-void list4MallocTest(void);
 #endif // !1
 

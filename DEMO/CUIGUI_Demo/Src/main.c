@@ -107,7 +107,7 @@ int main(void)
   
   LCD_Draw_Circle(100,100,50);
   __List4_Malloc_Init();
-  list4MallocTest();
+
   
   
   debug("----END----\r\n");
