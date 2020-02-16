@@ -1,6 +1,7 @@
 #include "List4_Malloc.H"
 
-list4Message mess = {0};     // 保存内存池信息
+list4Message list4mess = {0};     // 保存内存池信息
+u8  list4mallocArray[MAX_MALLOCSIZE]  = {0} ;//__attribute__((at(0x20000000)))
 
 /**
  *  初始化
@@ -14,6 +15,9 @@ void List4_Malloc_Init(list4Message* mess,u8* mallocAddr,List4Type length)
     mess->sizeStr = sizeof(list4Str);                  
     ((list4Str*)mallocAddr)->offset = length;
     ((list4Str*)mallocAddr)->blocksize = length;
+    debug("mess->startAddr = %#X\r\n",(u32)mess->startAddr);
+    debug("mess->endAddr = %#X\r\n",(u32)mess->endAddr);
+    debug("mess->endAddr - mess->startAddr = %d\r\n",(u32)(mess->endAddr - mess->startAddr));
 }
 
 
@@ -66,13 +70,13 @@ void* List4_Malloc(list4Message* mess,List4Type length)
     }
     while(current->blocksize + mess->sizeStr < length)
     {
+        back = current;
+        current = (list4Str*)(mess->startAddr + current->offset);       // 找下一个内存块
         if((u8*)current == mess->endAddr)
         {
             List4_Malloc_Log("无内存可以分配\r\n");
             return 0;                                   // 找到最后
         } 
-        back = current;
-        current = (list4Str*)(mess->startAddr + current->offset);       // 找下一个内存块
     } 
     back->offset =  current->offset;                    // current地址将被分配出去，back记录下一个地址，相当于将current指向的块从链表中取下   
     if(current->blocksize > length + mess->sizeStr)     // 该块被拆分成两部分，一部分分配掉，另一部分变成新块插入到链表中
@@ -88,6 +92,7 @@ void* List4_Malloc(list4Message* mess,List4Type length)
         current->blocksize = length;                    //记录该内存的大小
     }else   // 该块只够分配的
     {
+        current->blocksize = length;                    //记录该内存的大小
         if(mess->miniAddr == (u8*)current) mess->miniAddr = mess->startAddr + current->offset;
     }
     return (void*)((u8*)current + mess->sizeStr);
@@ -104,11 +109,11 @@ void List4_Free(list4Message* mess,void* addr)
     list4Str* back = current;                                       // 迭代过程中的内存地址备份    
     list4Str* pbefor = 0;                                           // 保存前块地址
     list4Str* pback = 0;                                            // 保存后块地址
-
+    
     // 范围判断
     if((u8*)addr < (mess->startAddr + mess->sizeStr) || ((u8*)addr + thisaddr->blocksize) > mess->endAddr)
     {
-        List4_Malloc_Log("释放错误，不在该内存池内\r\n");
+        List4_Malloc_Log("释放错误，不在该内存池内,addr= %#X,thisaddr->blocksize = %d\r\n",(u32)addr,thisaddr->blocksize);
         return ;                   
     }
     while((u8*)current != mess->endAddr)        // 寻找在它之前有没有一个块
@@ -155,4 +160,130 @@ void List4_Free(list4Message* mess,void* addr)
         }
     }
     List4_InsertBlock(mess,(u8*)thisaddr);// 插入到链表中
+}
+
+// 打印出空块地址
+void LogBlockMessage(list4Message* mess)
+{
+    list4Str* current = (list4Str*)mess->miniAddr;
+    u16 i = 0;
+    static u16 j = 0;
+    
+    debug("\r\n\r\n--------第 %d 次打印-----------\r\n",j);
+    while((u8*)current != mess->endAddr)
+    {
+        debug("[%d] = %#X   ",i,(u32)current);
+        i++;
+        current = (list4Str*)(mess->startAddr + current->offset);  
+    }
+    debug("\r\n\r\n");
+    j ++;
+}
+
+// 往内存中写数据
+void WriteByte(u8* addr,u8 dat,List4Type length)
+{
+    List4Type i = 0;
+    for(i=0;i<length;i++) addr[i] = dat;
+}
+void list4MallocTest(void)
+{  
+    List4Type len = 8;
+    u8* a;
+    u8* b;
+    u8* c;
+    u8* d;
+    u8* e;
+    u8* f;
+    u8* g;
+    u8* h;
+    u8* i;
+    u8* j;
+    
+    a = malloc(len);
+    WriteByte(a,1,len);
+    LogBlockMessage(&list4mess);
+    b = malloc(len);
+    WriteByte(b,2,len);
+    LogBlockMessage(&list4mess);
+    c = malloc(len);
+    WriteByte(c,3,len);
+    LogBlockMessage(&list4mess);
+    d = malloc(len);
+    WriteByte(d,4,len);
+    LogBlockMessage(&list4mess);
+    e = malloc(len);
+    WriteByte(e,5,len);
+    LogBlockMessage(&list4mess);
+    f = malloc(len);
+    WriteByte(f,6,len);
+    LogBlockMessage(&list4mess);
+    g = malloc(len);
+    WriteByte(g,7,len);
+    LogBlockMessage(&list4mess);
+    h = malloc(len);
+    WriteByte(h,8,len);
+    LogBlockMessage(&list4mess);
+    i = malloc(len);
+    WriteByte(i,9,len);
+    LogBlockMessage(&list4mess);
+    j = malloc(len);
+    WriteByte(j,11,len);
+    LogBlockMessage(&list4mess);
+    
+    free(a);
+    free(c);
+    free(e);
+    free(g);
+    free(i);
+    free(b);
+    free(j);
+    free(h);
+    free(f);
+    free(d);
+    LogBlockMessage(&list4mess);
+    debug("\r\n\r\n--------###-----------\r\n");
+    a = malloc(len);
+    WriteByte(a,1,len);
+    LogBlockMessage(&list4mess);
+    b = malloc(len);
+    WriteByte(b,2,len);
+    LogBlockMessage(&list4mess);
+    c = malloc(len);
+    WriteByte(c,3,len);
+    LogBlockMessage(&list4mess);
+    d = malloc(len);
+    WriteByte(d,4,len);
+    LogBlockMessage(&list4mess);
+    e = malloc(len);
+    WriteByte(e,5,len);
+    LogBlockMessage(&list4mess);
+    f = malloc(len);
+    WriteByte(f,6,len);
+    LogBlockMessage(&list4mess);
+    g = malloc(len);
+    WriteByte(g,7,len);
+    LogBlockMessage(&list4mess);
+    h = malloc(len);
+    WriteByte(h,8,len);
+    LogBlockMessage(&list4mess);
+    i = malloc(len);
+    WriteByte(i,9,len);
+    LogBlockMessage(&list4mess);
+    j = malloc(len);
+    WriteByte(j,11,len);
+    LogBlockMessage(&list4mess);
+    
+    free(a);
+    free(c);
+    free(e);
+    free(g);
+    free(i);
+    free(b);
+    free(j);
+    free(h);
+    free(f);
+    free(d);
+    LogBlockMessage(&list4mess);
+    
 }

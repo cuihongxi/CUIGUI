@@ -30,5 +30,6 @@ cuigui_demo\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 cuigui_demo\main.o: ../Inc/usart.h
 cuigui_demo\main.o: ../Inc/gpio.h
 cuigui_demo\main.o: ../Inc/fsmc.h
-cuigui_demo\main.o: ..\..\HARD\LCD\lcd.h
 cuigui_demo\main.o: ..\..\..\..\CUIGUI\uhead.h
+cuigui_demo\main.o: ..\..\HARD\LCD\lcd.h
+cuigui_demo\main.o: ..\..\..\malloc\List4_Malloc.H

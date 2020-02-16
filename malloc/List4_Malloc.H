@@ -9,13 +9,18 @@
  *          如果是64k内存池，则应该定义为u16类型，4G以内的内存应该定义为u32类型。
  *      ②   块的数据结构list4Str中的变量offset是记录了下一个空闲块，相对于首地址的偏移。这样就通过定义List4Type大大减少了内存浪费。
  *      ③   链表在生成新空间插入操作时进行了排序，按照从小到大的顺序排列，可以更快的malloc内存。
+ *      ④   没有内存对齐
+ *  2020年2月16日17:28:11
+ *      功能完成，进入测试阶段
  */
 
 
 #include "uhead.h"
 
 
-typedef     u32     List4Type;      // 该设定决定最大可以申请的数量
+typedef     u8                 List4Type;      // 该设定决定最大可以申请的数量
+#define     MAX_MALLOCSIZE      100         // 最大的内存数            
+
 
 typedef struct{
     List4Type blocksize;        // 本块可以申请的实际大小，不包含头信息
@@ -31,7 +36,7 @@ typedef struct{
 }list4Message;
 
 
-#define     DEBUG_List4_Malloc_LEVEL  0  // 调试开关
+#define     DEBUG_List4_Malloc_LEVEL  1  // 调试开关
 
 #if   DEBUG_List4_Malloc_LEVEL >0
 #include<stdio.h>
@@ -45,14 +50,15 @@ typedef struct{
 
 // 返回一个块的下个地址,addr的类型必须是list4Str* 
 #define  GETSTR_NEXTADDR(addr)     ((u8*)addr + mess->sizeStr + addr->blocksize)
-extern list4Message mess;
-
+extern list4Message list4mess;
+extern u8  list4mallocArray[MAX_MALLOCSIZE];
 /* 函数 */
 
 void    List4_Malloc_Init(list4Message* mess,u8* mallocAddr,List4Type length);
-#define __List4_Malloc_Init(mallocAddr,length)     List4_Malloc_Init(mess,mallocAddr,length)        // 初始化内存，其中mess是内存信息
-void*   List4_Malloc(list4Message* mess,List4Type length);                                          // 内存申请
-void    List4_Free(list4Message* mess,void* addr);                                                  // 内存释放
+#define __List4_Malloc_Init()     List4_Malloc_Init(&list4mess,list4mallocArray,MAX_MALLOCSIZE)   // 初始化内存，其中mess是内存信息
+void*   List4_Malloc(list4Message* mess,List4Type length);                                  // 内存申请
+void    List4_Free(list4Message* mess,void* addr);                                          // 内存释放
 
+void list4MallocTest(void);
 #endif // !1
 

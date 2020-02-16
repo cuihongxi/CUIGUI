@@ -20,6 +20,11 @@ typedef __IO u8     vu8;
 
 typedef enum {ISOK = 0, ISERROR = -1} Flag_Status;
 
+#define malloc(length)      List4_Malloc(&list4mess,length)
+#define free(a)             List4_Free(&list4mess,a)
+
+
+
 #define     DEBUG_LEVEL  1  // µ÷ÊÔ¿ª¹Ø
 
 #if   DEBUG_LEVEL >0

@@ -44,7 +44,9 @@
 #include "fsmc.h"
 
 /* USER CODE BEGIN Includes */
+#include "uhead.h"
 #include "lcd.h"
+#include "List4_Malloc.H"
 
 /* USER CODE END Includes */
 
@@ -104,6 +106,10 @@ int main(void)
   LCD_Clear(RED);
   
   LCD_Draw_Circle(100,100,50);
+  __List4_Malloc_Init();
+  list4MallocTest();
+  
+  
   debug("----END----\r\n");
   /* USER CODE END 2 */
 
