@@ -357,7 +357,7 @@ void StrtoDouble(unsigned char* resultArray,float* dat);//字符串类型数据转化成do
 
 
 /*支持unicode表汉字*/
-#define     CUIGUI_FONT936    1
+#define     CUIGUI_FONT936    0
            //支持汉字开关
 
 #if  CUIGUI_FONT936 > 0

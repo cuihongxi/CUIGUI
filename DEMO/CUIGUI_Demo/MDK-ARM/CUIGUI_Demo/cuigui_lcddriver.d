@@ -28,6 +28,8 @@ cuigui_demo\cuigui_lcddriver.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ha
 cuigui_demo\cuigui_lcddriver.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sram.h
 cuigui_demo\cuigui_lcddriver.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_fsmc.h
 cuigui_demo\cuigui_lcddriver.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
+cuigui_demo\cuigui_lcddriver.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
+cuigui_demo\cuigui_lcddriver.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
 cuigui_demo\cuigui_lcddriver.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 cuigui_demo\cuigui_lcddriver.o: ..\..\..\basic\CUIGUI_COLOR.H
 cuigui_demo\cuigui_lcddriver.o: ..\..\..\basic\GUI.H
