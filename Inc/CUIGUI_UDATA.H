@@ -18,7 +18,7 @@ typedef unsigned char           MSTYPE;
 
 
 typedef unsigned short	WCHAR;
-typedef unsigned int	UINT;
+typedef unsigned int	  UINT;
 typedef unsigned char   BYTE;
 
 #include "CUIGUI_CONFIG.H"

@@ -24,6 +24,14 @@
 "cuigui_demo\system_stm32f1xx.o"
 "cuigui_demo\lcd.o"
 "cuigui_demo\list4_malloc.o"
+"cuigui_demo\microsoftyaheiascii24.o"
+"cuigui_demo\cc936.o"
+"cuigui_demo\songti24.o"
+"cuigui_demo\cuigui_lcddriver.o"
+"cuigui_demo\cuigui_color.o"
+"cuigui_demo\cuigui_button.o"
+"cuigui_demo\gui.o"
+"cuigui_demo\relative_layout.o"
 --library_type=microlib --strict --scatter "CUIGUI_Demo\CUIGUI_Demo.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

@@ -45,8 +45,8 @@
 
 /* USER CODE BEGIN Includes */
 #include "uhead.h"
-#include "lcd.h"
-#include "List4_Malloc.H"
+#include "CUIGUI_UHEAD.H"
+#include "CUIGUI_BUTTON.H"
 
 /* USER CODE END Includes */
 
@@ -102,14 +102,15 @@ int main(void)
   MX_FSMC_Init();
   /* USER CODE BEGIN 2 */
   debug("start:\r\n");  
-  LCD_Init();
-  LCD_Clear(RED);
-  
-  LCD_Draw_Circle(100,100,50);
-  __List4_Malloc_Init();
 
+  CUIGUI_Init(LGRAYBLUE);
+  __List4_Malloc_Init();
+    
+  CUIGUI_SetFont(&GUI_Fontsongti24); 
+  CUIGUI_DrawStr(0,0,GREEN,"ÎÒ");
   
-  
+  Button* bt = NewButton(100,100,100,50);
+  bt->obj.Draw(bt);
   debug("----END----\r\n");
   /* USER CODE END 2 */
 

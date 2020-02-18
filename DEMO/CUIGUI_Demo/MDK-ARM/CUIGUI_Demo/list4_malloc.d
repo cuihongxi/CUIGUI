@@ -1,6 +1,6 @@
 cuigui_demo\list4_malloc.o: ..\..\..\malloc\List4_Malloc.C
 cuigui_demo\list4_malloc.o: ..\..\..\malloc\List4_Malloc.H
-cuigui_demo\list4_malloc.o: ..\..\..\..\CUIGUI\uhead.h
+cuigui_demo\list4_malloc.o: ..\..\..\config\uhead.h
 cuigui_demo\list4_malloc.o: ../Inc/main.h
 cuigui_demo\list4_malloc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
 cuigui_demo\list4_malloc.o: ../Inc/stm32f1xx_hal_conf.h

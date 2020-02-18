@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;    ../Drivers/STM32F1xx_HAL_Driver/Inc;    ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;    ../Drivers/CMSIS/Device/ST/STM32F1xx/Include;    ../Drivers/CMSIS/Include;    ..\..\HARD\LCD;    ..\..\..\..\CUIGUI;    ..\..\..\malloc;    ..\..\..\DataStruct</IncludePath>
+              <IncludePath>../Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\..\..\..\CUIGUI;..\..\..\malloc;..\..\..\datastruct;..\..\..\config;..\..\..\config\lcd;..\..\..\basic;..\..\..\font;..\..\..\guimodule</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -514,17 +514,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>HARD</GroupName>
+          <GroupName>config</GroupName>
           <Files>
             <File>
               <FileName>lcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\HARD\LCD\lcd.c</FilePath>
+              <FilePath>..\..\..\config\lcd\lcd.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>MALLOC</GroupName>
+          <GroupName>malloc</GroupName>
           <Files>
             <File>
               <FileName>List4_Malloc.C</FileName>
@@ -535,6 +535,56 @@
         </Group>
         <Group>
           <GroupName>DataStruct</GroupName>
+        </Group>
+        <Group>
+          <GroupName>font</GroupName>
+          <Files>
+            <File>
+              <FileName>MicrosoftYaHeiASCII24.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\font\MicrosoftYaHeiASCII24.c</FilePath>
+            </File>
+            <File>
+              <FileName>cc936.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\font\cc936.c</FilePath>
+            </File>
+            <File>
+              <FileName>songti24.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\font\songti24.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CUIGUI</GroupName>
+          <Files>
+            <File>
+              <FileName>CUIGUI_LCDDRIVER.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\basic\CUIGUI_LCDDRIVER.C</FilePath>
+            </File>
+            <File>
+              <FileName>CUIGUI_COLOR.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\basic\CUIGUI_COLOR.C</FilePath>
+            </File>
+            <File>
+              <FileName>CUIGUI_BUTTON.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\guimodule\CUIGUI_BUTTON.C</FilePath>
+            </File>
+            <File>
+              <FileName>GUI.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\basic\GUI.C</FilePath>
+            </File>
+            <File>
+              <FileName>RELATIVE_LAYOUT.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\layout\RELATIVE_LAYOUT.C</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>

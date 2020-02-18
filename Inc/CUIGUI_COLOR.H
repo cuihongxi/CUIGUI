@@ -55,7 +55,7 @@ typedef struct
       u8 B;
 }RGB_Struct;
 
-
+#define     COLOR_DATTYPE     u16         //定义颜色的数据类型
 COLOR_DATTYPE CUIGUI_GetColor(u32 color);       //24位色转换成自己需要的颜色,根据情况改写
 COLOR_DATTYPE CUIGUI_Color(u8 r,u8 g,u8 b);     //GUI颜色获取
 void CUIGUI_GETRGB(COLOR_DATTYPE color,RGB_Struct* rgb);            //获得RGB值
