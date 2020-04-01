@@ -114,16 +114,16 @@ int main(void)
 		debug("BlockSize = %d\r\n",hsd.SdCard.BlockSize);
 	}else debug("SDø®≥ı ºªØ ß∞‹\r\n");
 	
-	uint8_t pData[512] = {0};
-	uint8_t rData[512] = {0};
-	for(u16 i=0;i<512;i++)
-	{
-		pData[i] = i;
-	}
-   HAL_SD_WriteBlocks(&hsd,pData,0x0, 1, 0xffffffff);  
-	HAL_Delay(3);	
-   HAL_SD_ReadBlocks(&hsd,rData,0x0, 1, 0xffffffff); 
-   debug("rData[123] = %d\r\n",rData[123]);
+//	uint8_t pData[512] = {0};
+//	uint8_t rData[512] = {0};
+//	for(u16 i=0;i<512;i++)
+//	{
+//		pData[i] = i;
+//	}
+//   HAL_SD_WriteBlocks(&hsd,pData,0x0, 1, 0xffffffff);  
+//	HAL_Delay(3);	
+//   HAL_SD_ReadBlocks(&hsd,rData,0x0, 1, 0xffffffff); 
+//   debug("rData[123] = %d\r\n",rData[123]);
   CUIGUI_Init(LGRAYBLUE);
   __List4_Malloc_Init();
     
