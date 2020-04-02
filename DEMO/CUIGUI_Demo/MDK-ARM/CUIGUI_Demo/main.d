@@ -34,9 +34,10 @@ cuigui_demo\main.o: ../Inc/usart.h
 cuigui_demo\main.o: ../Inc/gpio.h
 cuigui_demo\main.o: ../Inc/fsmc.h
 cuigui_demo\main.o: ..\..\..\config\uhead.h
+cuigui_demo\main.o: ..\..\..\malloc\List4_Malloc.H
+cuigui_demo\main.o: ..\..\..\config\uhead.h
 cuigui_demo\main.o: ..\..\..\basic\CUIGUI_UHEAD.H
 cuigui_demo\main.o: ..\..\..\basic\CUIGUI_COLOR.H
 cuigui_demo\main.o: ..\..\..\basic\CUIGUI_LCDDRIVER.H
 cuigui_demo\main.o: ..\..\..\basic\GUI.H
-cuigui_demo\main.o: ..\..\..\malloc\List4_Malloc.H
-cuigui_demo\main.o: ..\..\..\guimodule\CUIGUI_BUTTON.H
+cuigui_demo\main.o: ..\..\..\module\CUIGUI_BUTTON.H

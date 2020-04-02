@@ -1,7 +1,4 @@
-
 #include "SingleList.h"
-#include "malloc.h"
-
 
 // 创建链表
 SingleList*  NewSingleList(void)
@@ -28,24 +25,6 @@ unsigned int  SingleList_InsertEnd(SingleList* list, SingleListNode* node)
 	current->next = newnode;     
     list->num ++;
 	//debug("newnode addr = %#X\r\n",(u32)newnode);
-    return (unsigned int)newnode;
-}
-
-unsigned int  SingleList_InsertEnd0(SingleList* list, SingleListNode* node)
-{ 
-    SingleList* current = list;
-
-    SingleListNodeStr* newnode = (SingleListNodeStr*)malloc(sizeof(SingleListNodeStr));
-	newnode->next = 0;
-	newnode->node = node;
-
-    for(; current->next != 0;)
-    {
-        current = current->next;
-    }
-	current->next = newnode;     
-    list->num ++;
-	debug("newnode addr = %#X\r\n",(u32)newnode);
     return (unsigned int)newnode;
 }
 
@@ -84,27 +63,11 @@ SingleListNode* SingleList_DeleteNode(SingleList* list, SingleListNode* node)
 	back =  current->next;
     current->next = ((SingleListNodeStr*)(current->next))->next;
 	//debug("back addr = %#X\r\n",(u32)back);
-	//free(back);
+	free(back);
 	list->num --;
     return (SingleListNode*)current;
 }
-SingleListNode* SingleList_DeleteNode0(SingleList* list, SingleListNode* node)
-{
-	SingleList* current = list;
-	void* back;
-    for(;current->next != 0; )
-    {
-        if( ((SingleListNodeStr*)(current->next))->node == node ) break;
-        current = current->next;
-    }
-	if(current->next == 0) return (SingleListNode*)current;
-	back =  current->next;
-    current->next = ((SingleListNodeStr*)(current->next))->next;
-	debug("back addr = %#X\r\n",(u32)back);
-	//free(back);
-	list->num --;
-    return (SingleListNode*)current;
-}
+
 //迭代器
 //如果有下一个则返回下一个指针，否则返回 0
 SingleListNode* SingleList_Iterator(SingleListNode** node)

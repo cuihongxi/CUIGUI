@@ -8,7 +8,7 @@
 
 
 #include "main.h"
-     
+ 
 
 typedef unsigned short	        u16;
 typedef unsigned int	        u32;
@@ -24,7 +24,10 @@ typedef __IO u8     vu8;
 
 
 typedef enum {ISOK = 0, ISERROR = -1} Flag_Status;
+typedef enum {FALSE = 0, TRUE = 1} BOOL;
 
+// ÒÆÖ²malloc
+#include "List4_Malloc.H"    
 #define malloc(length)      List4_Malloc(&list4mess,length)
 #define free(a)             List4_Free(&list4mess,a)
 

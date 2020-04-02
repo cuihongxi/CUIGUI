@@ -31,3 +31,4 @@ cuigui_demo\list4_malloc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pw
 cuigui_demo\list4_malloc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
 cuigui_demo\list4_malloc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
 cuigui_demo\list4_malloc.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+cuigui_demo\list4_malloc.o: ..\..\..\malloc\List4_Malloc.H

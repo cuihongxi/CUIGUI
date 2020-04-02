@@ -1,5 +1,5 @@
-cuigui_demo\cuigui_button.o: ..\..\..\guimodule\CUIGUI_BUTTON.C
-cuigui_demo\cuigui_button.o: ..\..\..\guimodule\CUIGUI_BUTTON.H
+cuigui_demo\cuigui_button.o: ..\..\..\module\CUIGUI_BUTTON.C
+cuigui_demo\cuigui_button.o: ..\..\..\module\CUIGUI_BUTTON.H
 cuigui_demo\cuigui_button.o: ..\..\..\basic\CUIGUI_UHEAD.H
 cuigui_demo\cuigui_button.o: ..\..\..\config\uhead.h
 cuigui_demo\cuigui_button.o: ../Inc/main.h
@@ -32,7 +32,8 @@ cuigui_demo\cuigui_button.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_p
 cuigui_demo\cuigui_button.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_sd.h
 cuigui_demo\cuigui_button.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_sdmmc.h
 cuigui_demo\cuigui_button.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
+cuigui_demo\cuigui_button.o: ..\..\..\malloc\List4_Malloc.H
+cuigui_demo\cuigui_button.o: ..\..\..\config\uhead.h
 cuigui_demo\cuigui_button.o: ..\..\..\basic\CUIGUI_COLOR.H
 cuigui_demo\cuigui_button.o: ..\..\..\basic\CUIGUI_LCDDRIVER.H
 cuigui_demo\cuigui_button.o: ..\..\..\basic\GUI.H
-cuigui_demo\cuigui_button.o: ..\..\..\malloc\List4_Malloc.H
