@@ -48,6 +48,8 @@
 #include "uhead.h"
 #include "CUIGUI_UHEAD.H"
 #include "CUIGUI_BUTTON.H"
+#include "disk.h"
+#include "cuiFAT.h"
 
 /* USER CODE END Includes */
 
@@ -105,15 +107,20 @@ int main(void)
   /* USER CODE BEGIN 2 */
   debug("start:\r\n");  
   
-	HAL_SD_CardCIDTypeDef pCID = {0};
-	
-	if(HAL_SD_GetCardState(&hsd) == HAL_SD_CARD_TRANSFER)
-	{
-		HAL_SD_GetCardCID(&hsd,&pCID);
-		debug("SD 初始化成功：");
-		debug("BlockSize = %d\r\n",hsd.SdCard.BlockSize);
-	}else debug("SD卡初始化失败\r\n");
-	
+//	HAL_SD_CardCIDTypeDef pCID = {0};
+//	
+//	if(HAL_SD_GetCardState(&hsd) == HAL_SD_CARD_TRANSFER)
+//	{
+//		HAL_SD_GetCardCID(&hsd,&pCID);
+//		debug("SD 初始化成功：");
+//		debug("BlockSize = %d\r\n",hsd.SdCard.BlockSize);
+//	}else debug("SD卡初始化失败\r\n");
+	__List4_Malloc_Init();
+	disk_Handle* hdisk = SDDisk_Init();			// 硬盘初始化函数
+	fat_Handle* faterro = CuiFat_BindingDisk(hdisk);
+	debug("faterro = %d\r\n",faterro->ErrorCode);
+
+	 
 //	uint8_t pData[512] = {0};
 //	uint8_t rData[512] = {0};
 //	for(u16 i=0;i<512;i++)
@@ -124,16 +131,16 @@ int main(void)
 //	HAL_Delay(3);	
 //   HAL_SD_ReadBlocks(&hsd,rData,0x0, 1, 0xffffffff); 
 //   debug("rData[123] = %d\r\n",rData[123]);
-  CUIGUI_Init(LGRAYBLUE);
-  __List4_Malloc_Init();
-    
-  CUIGUI_SetFont(&GUI_Fontsongti24); 
-  
-  Button* bt = NewButton(100,100,100,50);
-  bt->str = "我";
-  bt->obj.Draw(bt);
-  
-  debug("----END----\r\n");
+//  CUIGUI_Init(LGRAYBLUE);
+//  __List4_Malloc_Init();
+//    
+//  CUIGUI_SetFont(&GUI_Fontsongti24); 
+//  
+//  Button* bt = NewButton(100,100,100,50);
+//  bt->str = "我";
+//  bt->obj.Draw(bt);
+//  
+//  debug("----END----\r\n");
 	
 	
   /* USER CODE END 2 */

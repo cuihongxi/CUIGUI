@@ -34,3 +34,4 @@ cuigui_demo\cuifat.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 cuigui_demo\cuifat.o: ..\..\..\malloc\List4_Malloc.H
 cuigui_demo\cuifat.o: ..\..\..\config\uhead.h
 cuigui_demo\cuifat.o: ..\..\..\fat32\disk.h
+cuigui_demo\cuifat.o: ..\..\..\datastruct\SingleList.h

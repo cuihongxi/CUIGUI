@@ -41,3 +41,6 @@ cuigui_demo\main.o: ..\..\..\basic\CUIGUI_COLOR.H
 cuigui_demo\main.o: ..\..\..\basic\CUIGUI_LCDDRIVER.H
 cuigui_demo\main.o: ..\..\..\basic\GUI.H
 cuigui_demo\main.o: ..\..\..\module\CUIGUI_BUTTON.H
+cuigui_demo\main.o: ..\..\..\fat32\disk.h
+cuigui_demo\main.o: ..\..\..\fat32\cuiFAT.h
+cuigui_demo\main.o: ..\..\..\datastruct\SingleList.h

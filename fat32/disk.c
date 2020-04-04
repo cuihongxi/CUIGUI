@@ -27,7 +27,6 @@ disk_Handle* SDDisk_Init(void)
 {
 	disk_Handle* hdis  = (disk_Handle*)malloc(sizeof(disk_Handle));
 	HAL_SD_Init(&hsd);					// 硬盘初始化函数SD卡初始化函数
-	hdis->blockSize = hsd.SdCard.BlockNbr;
 	hdis->readBlocks = SDDiskReadBlocks;
 	hdis->writeBlocks = SDDiskWriteBlocks;
 	return hdis;

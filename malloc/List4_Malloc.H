@@ -21,8 +21,8 @@
 #include "uhead.h"
 
 
-typedef     u16                 List4Type;      // 该设定决定最大可以申请的数量
-#define     MAX_MALLOCSIZE      50*1024         // 最大的内存数            
+typedef     u32                 List4Type;      // 该设定决定最大可以申请的数量
+#define     MAX_MALLOCSIZE      40*1024         // 最大的内存数            
 
 
 typedef struct{
