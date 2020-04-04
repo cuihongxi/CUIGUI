@@ -118,8 +118,9 @@ int main(void)
 	__List4_Malloc_Init();
 	disk_Handle* hdisk = SDDisk_Init();			// Ó²ÅÌ³õÊ¼»¯º¯Êý
 	fat_Handle* faterro = CuiFat_BindingDisk(hdisk);
-	debug("faterro = %d\r\n",faterro->ErrorCode);
-
+	CuiFat_OpenDisk(faterro);
+	if(faterro->ErrorCode)debug("!!! ERRO !!! CODE : %d\r\n",faterro->ErrorCode);
+	
 //	uint8_t pData[512] = {0};
 //	uint8_t rData[512] = {0};
 //	for(u16 i=0;i<512;i++)

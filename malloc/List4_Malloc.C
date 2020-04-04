@@ -15,9 +15,9 @@ void List4_Malloc_Init(list4Message* mess,u8* mallocAddr,List4Type length)
     mess->sizeStr = sizeof(list4Str);                  
     ((list4Str*)mallocAddr)->offset = length;
     ((list4Str*)mallocAddr)->blocksize = length;
-    debug("mess->startAddr = %#X\r\n",(u32)mess->startAddr);
-    debug("mess->endAddr = %#X\r\n",(u32)mess->endAddr);
-    debug("mess->endAddr - mess->startAddr = %d\r\n",(u32)(mess->endAddr - mess->startAddr));
+//    debug("mess->startAddr = %#X\r\n",(u32)mess->startAddr);
+//    debug("mess->endAddr = %#X\r\n",(u32)mess->endAddr);
+//    debug("mess->endAddr - mess->startAddr = %d\r\n",(u32)(mess->endAddr - mess->startAddr));
 }
 
 

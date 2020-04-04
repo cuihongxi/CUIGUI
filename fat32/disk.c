@@ -29,6 +29,7 @@ disk_Handle* SDDisk_Init(void)
 	HAL_SD_Init(&hsd);					// 硬盘初始化函数SD卡初始化函数
 	hdis->readBlocks = SDDiskReadBlocks;
 	hdis->writeBlocks = SDDiskWriteBlocks;
+	hdis->sectorSize = 512;
 	return hdis;
 }
 

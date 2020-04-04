@@ -6,6 +6,15 @@
 #include "cuiFAT.h"
 #define	CuiFat_Valu(parray,type)	*((type*)parray)					// FAT获得小端的值
 
+//根据簇号，转换成起始扇区号
+u32 ChangeClus2Sector(fat_Handle* hfat,u32 clus)
+{
+	return hfat->rootSector + hfat->secPerClus * (clus - hfat->rootClus);
+}
+
+
+
+
 // 定义结构体存储MBR主启动记录,
 // 如果0扇区的第一个字节是0XEB则说明该扇区是DBR，该磁盘没有MBR的信息
 typedef struct{
@@ -67,7 +76,7 @@ typedef struct{
 	u8 BPB_FSVer[2];			//版本号
 	u8 rootClus[4];				//根目录所在的簇号
 	
-	u8 BPB_FSInfo[2];			//文件系统扇区信息:1 数据区的第一个扇区
+	u8 FSInfo[2];			//FSINFO（文件系统信息扇区）扇区号,该扇区为操作系统提供关于空簇总数及下一可用簇的信息
 	u8 BPB_BkBootSec[2];		//备份引导扇区，通常为6
 	u8 BPB_Reserved[12];		//备用
 	
@@ -75,8 +84,8 @@ typedef struct{
 	u8 BS_Reserved1;			//未用
 	u8 BS_BootSig;				//扩展引导标签
 	u8 BS_VolID[4];				//卷序列号
-	u8 BS_FilSysType[11];		//卷标
-	u8 BS_FilSysID[8];			//系统ID
+	u8 BS_FilSysType[11];		//卷标:NO NAME
+	u8 BS_FilSysID[8];			//系统ID文件系统格式的 ASCII 码，FAT32
 	u8 remain[420];				//空
 	u8 signer[2];				//签名；应该是55，AA 
 }SDDBR_Struct;
@@ -99,30 +108,22 @@ typedef struct{
 }directoryStruct;
 
 // 根据文件目录项生成文件的名字，需要free
-u8* MallocFileName(directoryStruct* dir)
+u8* GetFileName(directoryStruct* dir,fileMessage* filemess)
 {
-	u8* filename = 0;
-	u8 i = 0;
 	u8 j = 0;
-	if(dir->dirName[0] == 0xe5) return 0;	
-	for(i=0;i<8;i++)
+	for(j=0;j<8;j++)
 	{
-		if(dir->dirName[i] == 0x20) break;		
-	}
-	filename = (u8*)malloc(i+1);
-	for(j=0;j<i;j++)
-	{
-		filename[j] = dir->dirName[j];
+		if(dir->dirName[j] == 0x20)break;
+		filemess->filename[j] = dir->dirName[j];
 	}	
-	j++;
 //	filename[j] = '.';
 //	j++;
 //	for(i=0;i<3;i++)	//添加扩展名
 //	{
 //		filename[j + i] = dir->fileType[i];
 //	}
-	filename[j] = 0;
-	return filename;
+	filemess->filename[j] = 0;
+	return filemess->filename;
 }
 
 // 获得目录项创建时间和最后访问时间
@@ -150,12 +151,16 @@ void Fat_GetTimeDate(directoryStruct* dir,dirDateTime* datbuf)
 // 读文件目录项，获得文件信息
 void ReadDirMessage(fileMessage* filemess,directoryStruct* dir)
 {
-	filemess->filename = MallocFileName(dir);
+	GetFileName(dir,filemess);
 	filemess->fileSize = CuiFat_Valu(dir->fileSize,u32);
-	filemess->fileStartCube = (CuiFat_Valu(dir->dirClusHigh,u16) << 16)|(CuiFat_Valu(dir->dirClusLow,u16));
+	filemess->fileStartClus = (CuiFat_Valu(dir->dirClusHigh,u16) << 16)|(CuiFat_Valu(dir->dirClusLow,u16));
 	Fat_GetTimeDate(dir,&filemess->time);
 	filemess->nature = (fileNature)dir->fileNature;
+	
 }
+
+// 进入目录项，如果是文件夹，则进入下一级目录，如果是文件就打开
+
 
 //比较字符串disk是否包含在path字符串内
 BOOL  CampareStringIn(const char* path,const char* disk)
@@ -174,22 +179,34 @@ void ReadDBRSector(fat_Handle* hfat)
 	hfat->readBlocks(hfat->DBRSector,hfat->buf,1);
 	
 	SDDBR_Struct* dbr = (SDDBR_Struct*)hfat->buf;
+	if(CampareStringIn((const char*)dbr->BS_FilSysID,"FAT32") == FALSE)
+		hfat->ErrorCode |= ERRO_NotFat32;
 	hfat->sectorSize = CuiFat_Valu(dbr->bytsPerSec,u16);
 	hfat->secPerClus = dbr->secPerClus;
 	hfat->totalSize = (CuiFat_Valu(dbr->totalSectors,u32)*hfat->sectorSize)>>20;
 	hfat->totalSector = CuiFat_Valu(dbr->totalSectors,u32);
 	hfat->listFATSize = CuiFat_Valu(dbr->listFATSize,u32);
 	hfat->firstFATSector = hfat->DBRSector + CuiFat_Valu(dbr->rsvdSecCnt,u16);
-	hfat->firstDirSector = hfat->firstFATSector + (hfat->listFATSize * dbr->numFATs);
+	hfat->SecondFATSector = hfat->firstFATSector + hfat->listFATSize;
+	hfat->rootSector = hfat->firstFATSector + (hfat->listFATSize * dbr->numFATs);
 	hfat->rootClus = CuiFat_Valu(dbr->rootClus,u32);
-	
+	hfat->FSInfo = CuiFat_Valu(dbr->FSInfo,u16);
+	hfat->dirperSector = hfat->sectorSize/32;				// 一个扇区有几个目录项
+	hfat->dirlog.clus = hfat->rootClus;
+	hfat->dirlog.filnum = 0;
+	hfat->dirlog.secnum = 0;
+	hfat->numClusperSector = hfat->sectorSize/4;
 	debug("单个扇区大小：%d byts\r\n",hfat->sectorSize);
 	debug("磁盘容量：%d M\r\n",hfat->totalSize);
-	debug("根目录扇区号：%#X \r\n",hfat->firstDirSector);
-	debug("FAT表扇区号：%#X \r\n",hfat->firstFATSector);
-	debug("FAT表占的扇区数：%d\r\n",hfat->listFATSize);
-	debug("一个簇 %d 个扇区\r\n",hfat->secPerClus);
-
+	debug("根目录扇区号：%#X \r\n",hfat->rootSector);
+	debug("FAT1表扇区号：%#X \r\n",hfat->firstFATSector);
+	debug("FSInfo扇区号：%#X\r\n",hfat->FSInfo);
+	debug("每簇 %d 个扇区\r\n",hfat->secPerClus);
+	debug("每个扇区有 %d 个目录项\r\n",hfat->dirperSector);
+	
+	debug("签名标志: %#X\r\n",CuiFat_Valu(dbr->signer,u16));
+	//根据簇号，转换成扇区号
+ 
 }
 
 // 开始读0扇区
@@ -231,6 +248,9 @@ fat_Handle* CuiFat_BindingDisk(disk_Handle* dishandle)
 	hfat->writeBlocks = dishandle->writeBlocks;
 	hfat->diskMesList.next = 0;
 	hfat->diskMesList.num = 0;
+	hfat->buf = (u8*)malloc(dishandle->sectorSize);
+	hfat->sectorSize = dishandle->sectorSize;
+	
 /*	SingleList* pNode = &diskList;
 	debug("所有盘符：\r\n");
 	while(SingleList_Iterator(&pNode))
@@ -242,11 +262,54 @@ fat_Handle* CuiFat_BindingDisk(disk_Handle* dishandle)
 
 	return hfat;
 }
-
-
-// 打开文件
-FatErro CuiFat_OpenFile(const char* file)
+// 获得某簇里面的值
+u32 GetClusDate(fat_Handle* hfat,u32 clus)
 {
-	return FatOK;
+	u8* buf = (u8*)malloc(hfat->sectorSize);
+	u32 dat = 0;
+	u32 i = clus/hfat->numClusperSector;
+	u32 j = clus%hfat->numClusperSector;
+	hfat->readBlocks(hfat->firstFATSector + i,buf,1);//读簇所在的扇区
+	dat = CuiFat_Valu(((u32*)buf + j),u32);
+	free(buf);
+	return dat;
+}
+
+// 迭代遍历打开hfat->dirlog指向的目录
+// 每次调用返回一个fileMessage
+directoryStruct* Iterator_Dir(fat_Handle* hfat,directoryStruct* dir)
+{
+	//如果扇区号是0，则读一个扇区的数据
+	if(hfat->dirlog.filnum == 0)
+		hfat->readBlocks(ChangeClus2Sector(hfat,hfat->dirlog.clus) + hfat->dirlog.secnum,hfat->buf,1);
+	dir = ((directoryStruct*)hfat->buf) + hfat->dirlog.filnum;	
+	hfat->dirlog.filnum ++;
+	if(hfat->dirlog.filnum == hfat->dirperSector)
+	{
+		hfat->dirlog.filnum = 0; 
+		hfat->dirlog.secnum ++;
+		if(hfat->dirlog.secnum == hfat->secPerClus)
+		{
+			hfat->dirlog.secnum = 0;
+			//下一个簇
+			hfat->dirlog.clus = GetClusDate(hfat,hfat->dirlog.clus);
+			if(hfat->dirlog.clus == 0x0fffffff)	return 0;// 最后一个簇		
+		}
+	}
+
+	return dir;
+}
+
+// 打开盘符
+void CuiFat_OpenDisk(fat_Handle* hfat)
+{
+	directoryStruct dir = {0};
+	fileMessage filemess = {0};
+	
+	while(Iterator_Dir(hfat,&dir))// 打开根目录
+	{
+		ReadDirMessage(&filemess,&dir);
+		printf("文件名：%s\r\n",filemess.filename);
+	}
 }
 

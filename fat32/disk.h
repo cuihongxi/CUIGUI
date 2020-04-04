@@ -16,7 +16,7 @@ typedef struct
 	void		(*DiskInit)(void);										// 硬盘初始化函数
 	u32			(*readBlocks)(u32 sector,u8* pbuff,u32 numberOfBlocks);	// 读扇区函数
 	u32			(*writeBlocks)(u32 sector,u8* pbuff,u32 numberOfBlocks);// 写扇区函数
-	
+	u16			sectorSize;												// 扇区大小，单位字节
 }disk_Handle;
 
 

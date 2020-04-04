@@ -1,6 +1,6 @@
 /*
-注：文件操作没有权限限制，所有文件都可读可写
-	应该设置一个函数将盘符跟硬件进行绑定，操作盘符就相当于对绑定的硬件进行文件操作
+注：没有盘符的概念，直接操作hfat句柄
+	
 	应该可以格式化一个盘符
 */
 
@@ -115,17 +115,24 @@ typedef struct{
 // 文件信息表
 typedef struct{
 //	dirOneMes 	mes;			
-	u32 		fileStartCube;		// 文件对应的起始簇
+	u32 		fileStartClus;		// 文件对应的起始簇
 	u32 		fileSize;			// 文件大小
-	u8* 		filename;			// 文件名
+	u8 			filename[9];			// 文件名
 	fileNature 	nature;				// 文件属性
 	dirDateTime	time;				// 文件的时间
 	
-//	u32 		preCube;			// 当前簇
+//	u32 		preClus;			// 当前簇
 //	u32 		preSector;			// 当前扇区
 //	u32			haseread;			// 已读的文件数量
 //	u16 		preByte;			// 扇区中的偏移	
 }fileMessage;
+
+
+typedef struct{
+	u32 clus;		// FAT表项
+	u16	filnum;		// 目录项
+	u8 	secnum;		// 一个簇内的扇区编号
+}dirlislog;
 
 #define	dirSecList		SingleList		// 保存目录信息链表，该链表保存目录的dirOneMes
 
@@ -137,16 +144,23 @@ typedef struct
 	u32			(*readBlocks)(u32 sector,u8* pbuff,u32 numberOfBlocks);	// 读扇区函数
 	u32			(*writeBlocks)(u32 sector,u8* pbuff,u32 numberOfBlocks);// 写扇区函数
 	
-	u8			buf[512];
+	u8*			buf;					// 数据缓存区指针	
 	u32			DBRSector;				// DBR扇区号
-	u8   		secPerClus;				// 每个簇的扇区数
-	u16 		sectorSize;             // 扇区大小
 	u32 		totalSector;			// 总扇区数
 	u32			listFATSize;			// 一个FAT表占的扇区数
 	u32			totalSize;				// 单位，M字节
 	u32    		firstFATSector;			// 第一个FAT表的扇区号：DBRSector + BPB_RsvdSecCnt
+	u32    		SecondFATSector;		// 第2个FAT表的扇区号
 	u32 		rootClus;				// 根目录所在的簇号
-	u32    		firstDirSector;			// 根目录的扇区号：FirstFATSector +2*BPB_FATSz32
+	u32    		rootSector;				// 根目录扇区号：FirstFATSector +dbr->numFATs*BPB_FATSz32.
+	u16			dirperSector;			// 一个扇区可以保存的最大目录项数
+	u8   		secPerClus;				// 每个簇的扇区数
+	u16 		sectorSize;             // 扇区大小	
+	u16			FSInfo;					// FSINFO的扇区号（文件系统信息扇区）
+	u16			numClusperSector;		// FAT表一个扇区能保存几个簇
+	dirlislog	dirlog;					// 保存当前读到的目录项
+	fileMessage filemess;				// 当前的目录项信息
+	
 	
 	dirSecList 	diskMesList;			// 目录结构链表，保存路径信息
 }fat_Handle;
@@ -155,6 +169,7 @@ typedef struct
 
 /*函数*/
 
-fat_Handle* CuiFat_BindingDisk(disk_Handle* dishandle);	// 将盘符跟硬件进行绑定
+fat_Handle* CuiFat_BindingDisk(disk_Handle* dishandle);		// 将盘符跟硬件进行绑定
+void CuiFat_OpenDisk(fat_Handle* hfat);						// 打开盘符
 
 #endif
