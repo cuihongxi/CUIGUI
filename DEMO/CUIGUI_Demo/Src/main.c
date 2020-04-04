@@ -120,7 +120,6 @@ int main(void)
 	fat_Handle* faterro = CuiFat_BindingDisk(hdisk);
 	debug("faterro = %d\r\n",faterro->ErrorCode);
 
-	 
 //	uint8_t pData[512] = {0};
 //	uint8_t rData[512] = {0};
 //	for(u16 i=0;i<512;i++)
