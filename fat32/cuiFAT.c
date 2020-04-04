@@ -150,7 +150,7 @@ void Fat_GetTimeDate(directoryStruct* dir,dirDateTime* datbuf)
 // 读文件目录项，获得文件信息
 void ReadDirMessage(fileMessage* filemess,directoryStruct* dir)
 {
-	filemess->filename = CreatFileName(dir);
+	filemess->filename = MallocFileName(dir);
 	filemess->fileSize = CuiFat_Valu(dir->fileSize,u32);
 	filemess->fileStartCube = (CuiFat_Valu(dir->dirClusHigh,u16) << 16)|(CuiFat_Valu(dir->dirClusLow,u16));
 	Fat_GetTimeDate(dir,&filemess->time);
@@ -243,34 +243,6 @@ fat_Handle* CuiFat_BindingDisk(disk_Handle* dishandle)
 	return hfat;
 }
 
-
-
-/*******************************************************
-*-函数名称	：CuiFat_OpenDisk
-*-函数作用	：打开一个盘符，返回该硬盘的基本信息
-*-参数		：
-*-返回值	：打开成功返回句柄，失败返回0
-*-备注		：
-*******************************************************/
-FatErro CuiFat_OpenDisk(const char* disk)
-{
-	fat_Handle* hfat = 0;
-	// 遍历盘符链表，如果盘符重复则退出
-	SingleListNode* pNode = &diskList;	
-	while(SingleList_Iterator(&pNode))
-	{
-		if(CampareStringIn(disk,SingeListGetnode(fat_Handle,pNode)->driveName))break;
-	}
-	if(pNode == 0)	
-	{
-		debug("盘符无效\r\n");
-		return ERRO_DiskNameE;
-	}
-	hfat = SingeListGetnode(fat_Handle,pNode);
-	ReadFatMessage(hfat);
-	
-	return FatOK;
-}
 
 // 打开文件
 FatErro CuiFat_OpenFile(const char* file)
