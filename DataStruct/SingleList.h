@@ -1,6 +1,9 @@
 /**
  * 
  * 单链表
+ * 
+ * 当插入节点使用SingleList_InsertBefore时，相当于栈操作。
+ * 当插入节点使用SingleList_InsertEnd，相当于队列操作
 */
 
 #ifndef _SingleList_H_
@@ -25,6 +28,8 @@ typedef struct
 
 }SingleListNodeStr;
 
+
+
 SingleList* NewSingleList(void);											// 创建新链表
 unsigned int SingleList_InsertEnd(SingleList* list, SingleListNode* node);	// 向链表添加节点
 SingleListNodeStr* SingleList_InsertBefore(SingleList* list, SingleListNode* objnode, SingleListNode* newnode);// 在节点之前插入新节点,返回新插入的节点地址
@@ -33,7 +38,6 @@ SingleListNode* SingleList_Iterator(SingleListNode** node);					// 迭代器
 void FreeSingList(SingleList* list);										// 释放链表
 void SingleList_MoveEndNode(SingleList* list, SingleListNode* node);		// 将节点移到链表末尾
 #define		SingeListGetnode(type,nodehead)		((type*)(((SingleListNodeStr*)nodehead)->node))
-
 
 
 

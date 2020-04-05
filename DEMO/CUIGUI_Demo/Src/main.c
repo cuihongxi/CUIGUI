@@ -117,9 +117,14 @@ int main(void)
 //	}else debug("SD¿¨³õÊ¼»¯Ê§°Ü\r\n");
 	__List4_Malloc_Init();
 	disk_Handle* hdisk = SDDisk_Init();			// Ó²ÅÌ³õÊ¼»¯º¯Êý
-	fat_Handle* faterro = CuiFat_BindingDisk(hdisk);
-	CuiFat_OpenDisk(faterro);
-	if(faterro->ErrorCode)debug("!!! ERRO !!! CODE : %d\r\n",faterro->ErrorCode);
+	fat_Handle* hfat = CuiFat_BindingDisk(hdisk);
+	CuiFatOpenBootDir(hfat);
+	CuiFatOpenDirByName(hfat,"BOOT");
+	CuiFatOpenDirByName(hfat,"2");
+	CuiFatBack(hfat);
+	CuiFatBack(hfat);
+	CuiFatBack(hfat);
+	if(hfat->ErrorCode)debug("!!! ERRO !!! CODE : %d\r\n",hfat->ErrorCode);
 	
 //	uint8_t pData[512] = {0};
 //	uint8_t rData[512] = {0};

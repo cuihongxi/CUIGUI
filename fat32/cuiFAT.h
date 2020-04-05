@@ -9,6 +9,9 @@
 *	使用步骤：
 	① 根据硬件不同，进行配置，填充获得硬件句柄 disk_Handle
 	② 使用	hfat = CuiFat_BindingDisk(disk_Handle);	绑定硬件，获得hfat句柄
+	③ CuiFatOpenBootDir(hfat); 打开根目录
+	④ CuiFatOpenDirByName(hfat,"BOOT"); 打开该目录下的文件夹
+	⑤ CuiFatBack(hfat); 文件夹回退，返回上一级菜单
 	
 */
 
@@ -117,7 +120,7 @@ typedef struct{
 //	dirOneMes 	mes;			
 	u32 		fileStartClus;		// 文件对应的起始簇
 	u32 		fileSize;			// 文件大小
-	u8 			filename[9];			// 文件名
+	u8 			filename[13];		// 文件名
 	fileNature 	nature;				// 文件属性
 	dirDateTime	time;				// 文件的时间
 	
@@ -134,7 +137,23 @@ typedef struct{
 	u8 	secnum;		// 一个簇内的扇区编号
 }dirlislog;
 
-#define	dirSecList		SingleList		// 保存目录信息链表，该链表保存目录的dirOneMes
+#define	dirSecList		SingleList*		// 保存目录信息链表，该链表保存目录的dirOneMes
+//目录项结构体
+typedef struct{						
+	u8 dirName[8];					//文件名的第一个ASCII码。如果没有被使用则为00，如果使用过了0xE5
+	u8 fileType[3];					//文件名类型
+	u8 fileNature;					//文件属性
+	u8 reserve;						//保留为0
+	u8 DIR_CrtTimeTeenth[1];		//文件建立的十分之一秒
+	u8 crtTime[2];					//文件建立的时间：111 (22222)秒的一半 (33333)时 444，分为444111
+	u8 crtDate[2];					//文件建立日期：111 (22222)日 (3333333)年+1980 4，月4111
+	u8 visitDate[2];				//文件最后访问日期：111 (22222)日 (3333333)年+1980 4，月4111
+	u8 dirClusHigh[2];				//该目录项簇号的高字节
+	u8 writeTime[2];				//文件写的时间
+	u8 writeDate[2];				//文件改写日期
+	u8 dirClusLow[2];				//该目录项簇号的低字节
+	u8 fileSize[4];					//文件大小
+}directoryStruct;
 
 // fat文件系统的句柄
 typedef struct
@@ -159,17 +178,30 @@ typedef struct
 	u16			FSInfo;					// FSINFO的扇区号（文件系统信息扇区）
 	u16			numClusperSector;		// FAT表一个扇区能保存几个簇
 	dirlislog	dirlog;					// 保存当前读到的目录项
-	fileMessage filemess;				// 当前的目录项信息
+	directoryStruct* dir;				// 指向当前的目录项地址
 	
-	
-	dirSecList 	diskMesList;			// 目录结构链表，保存路径信息
+	dirSecList 	diskMesList;			// 目录结构链表，保存 dirlog.clus
 }fat_Handle;
 
+//值节点
+typedef struct 
+{	
+	listType* next;
+	u32 value;
 
+}valueNode;
 
 /*函数*/
 
-fat_Handle* CuiFat_BindingDisk(disk_Handle* dishandle);		// 将盘符跟硬件进行绑定
-void CuiFat_OpenDisk(fat_Handle* hfat);						// 打开盘符
+fat_Handle* CuiFat_BindingDisk(disk_Handle* dishandle);			// 将盘符跟硬件进行绑定
+
+void CuiFatOpenBootDir(fat_Handle* hfat);						// 打开根目录
+void CuiFatOpenDirByName(fat_Handle* hfat,const char* dirname);	// 按名称打开文件夹
+void CuiFatBack(fat_Handle* hfat);								// 回退
+
+/*数据结构相关函数*/
+#define		SingeListGetValue(nodehead)		(((valueNode*)nodehead)->value)
+void  		ValuPush(SingleList* list,u32 value);	// 值的入栈的push操作
+valueNode* 	ValuPop(SingleList* list);				// 值的出栈pop操作
 
 #endif
