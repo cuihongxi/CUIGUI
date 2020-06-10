@@ -9,11 +9,11 @@ const GUI_FONT* cuigui_Font;  //定义全局变量
 static const WCHAR Array[2][1] = {
 	//GBK码
 	{
-		0xA1CC
+		0xCED2
 	},
 	//UNICODE码
 	{
-		0x221A 
+		0x6211
 	},
                   
 };

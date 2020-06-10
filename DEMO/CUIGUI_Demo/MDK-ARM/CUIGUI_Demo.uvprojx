@@ -603,13 +603,6 @@
         </Group>
         <Group>
           <GroupName>fat32</GroupName>
-          <Files>
-            <File>
-              <FileName>cuiFAT.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\fat32\cuiFAT.c</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>
