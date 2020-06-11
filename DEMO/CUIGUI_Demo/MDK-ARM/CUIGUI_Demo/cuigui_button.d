@@ -1,5 +1,5 @@
-cuigui_demo\cuigui_button.o: ..\..\..\guimodule\CUIGUI_BUTTON.C
-cuigui_demo\cuigui_button.o: ..\..\..\guimodule\CUIGUI_BUTTON.H
+cuigui_demo\cuigui_button.o: ..\..\..\guimodule\BUTTON\CUIGUI_BUTTON.C
+cuigui_demo\cuigui_button.o: ..\..\..\guimodule\BUTTON\CUIGUI_BUTTON.H
 cuigui_demo\cuigui_button.o: ..\..\..\basic\CUIGUI_UHEAD.H
 cuigui_demo\cuigui_button.o: ..\..\..\config\uhead.h
 cuigui_demo\cuigui_button.o: ../Inc/main.h

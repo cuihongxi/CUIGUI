@@ -3,11 +3,7 @@
 *
 */
 
-
 #include "CUIGUI_BUTTON.H"
-
-
-
 /*********************************************************
    按键0    	
 */
@@ -122,17 +118,15 @@ void DefaultDrawButton(void* button)
 
  Button*  NewButton(u16 xpos,u16 ypos,u16 width,u16 height)
 {    
-      Button* button = (Button*)malloc(sizeof(Button));
-      button->ispressed = BT_UNPRESSED;
-      button->str = 0;   
-      button->fontColor = BLACK;      
-      button->pFont = CUIGUI_GetFont();
-      ((Obj*)button)->height =height;
-      ((Obj*)button)->width = width;
-      ((Obj*)button)->x = xpos;
-      ((Obj*)button)->y = ypos;
-      button->obj.Draw = &DefaultDrawButton;
-      return button;
+	Button* button = (Button*)malloc(sizeof(Button));
+
+	InitOBJParam(button,xpos,ypos,width,height,DefaultDrawButton);
+	button->ispressed = BT_UNPRESSED;
+	button->str = 0;   
+	button->fontColor = BLACK;      
+	button->pFont = CUIGUI_GetFont();
+
+	return button;
 }
 
 //设置按键颜色

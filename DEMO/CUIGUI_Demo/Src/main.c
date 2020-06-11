@@ -48,6 +48,7 @@
 #include "uhead.h"
 #include "CUIGUI_UHEAD.H"
 #include "CUIGUI_BUTTON.H"
+#include "CUIGUI_SLIDER.H"
 
 /* USER CODE END Includes */
 
@@ -114,26 +115,19 @@ int main(void)
 		debug("BlockSize = %d\r\n",hsd.SdCard.BlockSize);
 	}else debug("SD卡初始化失败\r\n");
 	
-//	uint8_t pData[512] = {0};
-//	uint8_t rData[512] = {0};
-//	for(u16 i=0;i<512;i++)
-//	{
-//		pData[i] = i;
-//	}
-//   HAL_SD_WriteBlocks(&hsd,pData,0x0, 1, 0xffffffff);  
-//	HAL_Delay(3);	
-//   HAL_SD_ReadBlocks(&hsd,rData,0x0, 1, 0xffffffff); 
-//   debug("rData[123] = %d\r\n",rData[123]);
-  CUIGUI_Init(LGRAYBLUE);
-  __List4_Malloc_Init();
-    
-  CUIGUI_SetFont(&GUI_Fontsongti24); 
-  
-  Button* bt = NewButton(100,100,100,50);
-  bt->str = "我";
-  bt->obj.Draw(bt);
-  
-  debug("----END----\r\n");
+	CUIGUI_Init(LGRAYBLUE);
+	__List4_Malloc_Init();
+
+	CUIGUI_SetFont(&GUI_Fontsongti24); 
+
+	Button* bt = NewButton(100,100,100,50);
+	bt->str = "我";
+	bt->obj.Draw(bt);
+
+	Slider* slider = NewSlider(10,200,400,40,100,1,Horizontal);
+	slider->val = 30;
+	slider->obj.Draw(slider);
+	debug("----END----\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */

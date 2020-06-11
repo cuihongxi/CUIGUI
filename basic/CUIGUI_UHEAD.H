@@ -21,5 +21,15 @@ typedef struct Obj_struct
     void (*Draw)(void*);	//画出该控件
 }Obj;
 
+
+// 初始化OBJ控件的基本参数
+#define	InitOBJParam(obj,xpos,ypos,w,h,fun)	do{\
+	((Obj*)obj)->x = xpos;\
+	((Obj*)obj)->y = ypos;\
+	((Obj*)obj)->width = w;\
+	((Obj*)obj)->height = h;\
+	((Obj*)obj)->Draw = &fun;\
+}while(0)
+
 #endif // !__CUIGUI_UHEAD_H
 

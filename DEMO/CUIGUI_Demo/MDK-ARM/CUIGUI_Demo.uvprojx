@@ -134,11 +134,11 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4107</DriverSelection>
+            <DriverSelection>4101</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\..\..\..\CUIGUI;..\..\..\malloc;..\..\..\datastruct;..\..\..\config;..\..\..\config\lcd;..\..\..\basic;..\..\..\font;..\..\..\guimodule;..\..\..\config\SD;..\..\..\fat32</IncludePath>
+              <IncludePath>../Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\..\..\..\CUIGUI;..\..\..\malloc;..\..\..\datastruct;..\..\..\config\lcd\TFT;..\..\..\basic;..\..\..\font;..\..\..\guimodule;..\..\..\config\SD;..\..\..\fat32;..\..\..\config;..\..\..\guimodule\BUTTON;..\..\..\guimodule\SLIDER</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -534,7 +534,7 @@
             <File>
               <FileName>lcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\config\lcd\lcd.c</FilePath>
+              <FilePath>..\..\..\config\lcd\TFT\lcd.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -585,11 +585,6 @@
               <FilePath>..\..\..\basic\CUIGUI_COLOR.C</FilePath>
             </File>
             <File>
-              <FileName>CUIGUI_BUTTON.C</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\guimodule\CUIGUI_BUTTON.C</FilePath>
-            </File>
-            <File>
               <FileName>GUI.C</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\basic\GUI.C</FilePath>
@@ -598,6 +593,16 @@
               <FileName>RELATIVE_LAYOUT.C</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\layout\RELATIVE_LAYOUT.C</FilePath>
+            </File>
+            <File>
+              <FileName>CUIGUI_BUTTON.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\guimodule\BUTTON\CUIGUI_BUTTON.C</FilePath>
+            </File>
+            <File>
+              <FileName>CUIGUI_SLIDER.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\guimodule\SLIDER\CUIGUI_SLIDER.C</FilePath>
             </File>
           </Files>
         </Group>

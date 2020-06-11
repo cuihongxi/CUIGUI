@@ -81,90 +81,11 @@ void BtBMPText(ButtonBMP* button)
             CUIGUI_DrawStr(x,y,((Button*)button)->fontColor,((Button*)button)->str);              
       }                         
 }
-
-/************************************************************************************
-*-函数名称	：默认皮肤函数 , 需要改写时改写
-*-参数	：
-*返回值	：
-*-函数功能	：
-*-创建者	：博硕电子科技，www.explorersoftware.taobao.com
-*/
-
-void BtDefaultSkin(Button* button)
-{
-      BtSkin(button);
-}    
-
-
-
-/************************************************************************************
-*-函数名称	：设定按键上的文本
-*-说明	：没有对字体大小,有效性做判断
-*返回值	：
-*-函数功能	：
-*-创建者	：博硕电子科技，www.explorersoftware.taobao.com
-*/
-void BtText(Button* button)
-{
-      u16 length ;    
-              
-      if(button->str != 0) 
-      {
-            CUIGUI_SetFont(button->pFont); 
-            length = GetLengthStr(button->str);
-            if(button->ispressed == BT_PRESSED) button->fontColor = GetXORColor(button->fontColor);
-            CUIGUI_DrawStr(((Obj*)button)->x+(((Obj*)button)->width-length)/2,\
-            ((Obj*)button)->y+ (((Obj*)button)->height - button->pFont->height)/2,button->fontColor,button->str);              
-      }     
-}
-
-//默认文本样式
-void BtDefaultText(Button* button)
-{
-      BtText(button);
-}
-
-/************************************************************************************
-*-函数名称	：
-*-注意	：
-*返回值	：
-*-函数功能	：
-*-创建者	：博硕电子科技，www.explorersoftware.taobao.com
-*/
-
-void DefaultDrawButton(Button* button)
-{                      
-      BtDefaultSkin(button);                      //皮肤
-      BtDefaultText(button);                      //字 
-}
 //BMP BUTTON
 void DrawButtonBMP(Button* button)
 {                      
       BtBMPSkin((ButtonBMP*)button);                      //皮肤
       BtBMPText((ButtonBMP*)button);                      //字 
-}
-/************************************************************************************
-*-函数名称	：新建一个按键,并分配默认值
-*-参数	：
-*返回值	：
-*-函数功能	：
-*-创建者	：博硕电子科技，www.explorersoftware.taobao.com
-*/
-
- Button*  NewButton(u16 xpos,u16 ypos,u16 width,u16 height)
-{    
-      Button* button = (Button*)CUI_Mallco(sizeof(Button));
-	
-      button->ispressed = BT_UNPRESSED;
-      button->str = 0;   
-      button->fontColor = BLACK;      
-      button->pFont = CUIGUI_GetFont();
-      ((Obj*)button)->height =height;
-      ((Obj*)button)->width = width;
-      ((Obj*)button)->x = xpos;
-      ((Obj*)button)->y = ypos;
-      button->DrawButton = &DefaultDrawButton;
-      return button;
 }
 
 //设置BMP BUTTON的图片

@@ -32,9 +32,10 @@
 "cuigui_demo\songti24.o"
 "cuigui_demo\cuigui_lcddriver.o"
 "cuigui_demo\cuigui_color.o"
-"cuigui_demo\cuigui_button.o"
 "cuigui_demo\gui.o"
 "cuigui_demo\relative_layout.o"
+"cuigui_demo\cuigui_button.o"
+"cuigui_demo\cuigui_slider.o"
 --library_type=microlib --strict --scatter "CUIGUI_Demo\CUIGUI_Demo.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

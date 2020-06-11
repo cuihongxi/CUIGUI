@@ -1,5 +1,5 @@
-cuigui_demo\lcd.o: ..\..\..\config\lcd\lcd.c
-cuigui_demo\lcd.o: ..\..\..\config\lcd\lcd.h
+cuigui_demo\lcd.o: ..\..\..\config\lcd\TFT\lcd.c
+cuigui_demo\lcd.o: ..\..\..\config\lcd\TFT\lcd.h
 cuigui_demo\lcd.o: ..\..\..\config\uhead.h
 cuigui_demo\lcd.o: ../Inc/main.h
 cuigui_demo\lcd.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h

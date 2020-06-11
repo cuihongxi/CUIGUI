@@ -39,4 +39,5 @@ cuigui_demo\main.o: ..\..\..\basic\CUIGUI_COLOR.H
 cuigui_demo\main.o: ..\..\..\basic\CUIGUI_LCDDRIVER.H
 cuigui_demo\main.o: ..\..\..\basic\GUI.H
 cuigui_demo\main.o: ..\..\..\malloc\List4_Malloc.H
-cuigui_demo\main.o: ..\..\..\guimodule\CUIGUI_BUTTON.H
+cuigui_demo\main.o: ..\..\..\guimodule\BUTTON\CUIGUI_BUTTON.H
+cuigui_demo\main.o: ..\..\..\guimodule\SLIDER\CUIGUI_SLIDER.H

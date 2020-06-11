@@ -531,7 +531,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\config\lcd\lcd.c</PathWithFileName>
+      <PathWithFileName>..\..\..\config\lcd\TFT\lcd.c</PathWithFileName>
       <FilenameWithoutPath>lcd.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -647,8 +647,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\guimodule\CUIGUI_BUTTON.C</PathWithFileName>
-      <FilenameWithoutPath>CUIGUI_BUTTON.C</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\basic\GUI.C</PathWithFileName>
+      <FilenameWithoutPath>GUI.C</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -659,8 +659,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\basic\GUI.C</PathWithFileName>
-      <FilenameWithoutPath>GUI.C</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\layout\RELATIVE_LAYOUT.C</PathWithFileName>
+      <FilenameWithoutPath>RELATIVE_LAYOUT.C</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -671,8 +671,20 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\layout\RELATIVE_LAYOUT.C</PathWithFileName>
-      <FilenameWithoutPath>RELATIVE_LAYOUT.C</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\guimodule\BUTTON\CUIGUI_BUTTON.C</PathWithFileName>
+      <FilenameWithoutPath>CUIGUI_BUTTON.C</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>9</GroupNumber>
+      <FileNumber>37</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\..\guimodule\SLIDER\CUIGUI_SLIDER.C</PathWithFileName>
+      <FilenameWithoutPath>CUIGUI_SLIDER.C</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
